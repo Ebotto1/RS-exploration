@@ -1,0 +1,215 @@
+---
+title: "R Notebook"
+output:
+  word_document: default
+  html_notebook: default
+  html_document: default
+---
+
+[R Markdown](http://rmarkdown.rstudio.com) 
+
+Set working directory
+```{r include=FALSE}
+setwd ("C:\\Users\\botto\\Documents\\R\\tradesrat\\")
+```
+Load packages
+```{r setup, include=FALSE}
+require(quantmod)
+require(TTR)
+require(zoo)
+require(data.table)
+require(RColorBrewer)
+```
+Get stock data
+
+Each call results in the data being loaded directly into your workspace, with the name of the object returned from the call.
+```{r include=FALSE}
+symbol.vec = c("AAPL","AZN","NVDA","COST","DFS","DIS","EFA",
+           "FB","IBB","SFM","TLT","TSLA","TXN","TWTR",
+           "UPS","V", "WEC", "BAC", "PSX", "MCD","AMZN",
+           "GOOG","TEAM","CELG","SQ","DPS","VIX", "SPY")
+getSymbols(symbol.vec, from ="2017-01-03")
+
+```
+
+
+```{r}
+colnames(V)
+start(V)
+end(V)
+tail(V)
+```
+getquote 
+```{r}
+for (i in symbol.vec) {
+  try(x <- getQuote(i), TRUE)
+  print(x)
+}
+```
+
+Chart a series with MACD
+```{r}
+
+barChart(V$V.Close,theme='white.mono',bar.type='hlc') 
+addBBands(n = 20, sd = 2, ma = "SMA", draw ='bands', on = -1)
+addMACD(fast = 12, slow = 26, signal = 9, type = "EMA",histogram = TRUE)
+
+```
+
+
+
+Add logic for dividends
+```{r}
+for (i in symbol.vec){
+  try(x <- getDividends(i,from = "2017-01-01", split.adjust = TRUE), TRUE)
+  print(x)
+}
+```
+
+
+```{r}
+getQuote(TSLA)
+
+```
+
+
+```{r}
+TSLA_gmma <- GMMA(TSLA[,4])
+plot(TSLA_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+barChart(TSLA$TSLA.Close,theme='white.mono',bar.type='candlestick') 
+addBBands(n = 20, sd = 2, ma = "SMA", draw ='bands', on = -1)
+addMACD(fast = 12, slow = 26, signal = 9, type = "EMA",histogram = TRUE)
+```
+
+```{r}
+TXN_gmma <- GMMA(TXN[,4])
+plot(TXN_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+
+```{r}
+barChart(TXN$TXN.Close,theme='white.mono',bar.type='candlestick') 
+addBBands(n = 20, sd = 2, ma = "SMA", draw ='bands', on = -1)
+addMACD(fast = 12, slow = 26, signal = 9, type = "EMA",histogram = TRUE)
+```
+
+```{r}
+TWTR_gmma <- GMMA(TWTR[,4])
+plot(TWTR_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+UPS_gmma <- GMMA(UPS[,4])
+plot(UPS_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+BAC_gmma <- GMMA(BAC[,4])
+plot(BAC_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+PSX_gmma <- GMMA(PSX[,4])
+plot(PSX_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+MCD_gmma <- GMMA(MCD[,4])
+plot(MCD_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+GOOG_gmma <- GMMA(GOOG[,4])
+plot(GOOG_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+TEAM_gmma <- GMMA(TEAM[,4])
+plot(TEAM_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+SQ_gmma <- GMMA(SQ[,4])
+plot(SQ_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+DPS_gmma <- GMMA(DPS[,4])
+plot(DPS_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+FB_gmma <- GMMA(FB[,4])
+plot(FB_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+IBB_gmma <- GMMA(IBB[,4])
+plot(IBB_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+SFM_gmma <- GMMA(SFM[,4])
+plot(SFM_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+TLT_gmma <- GMMA(TLT[,4])
+plot(TLT_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+
+V_gmma <- GMMA(V[,4])
+plot(V_gmma,col = brewer.pal(11,"Spectral"))
+
+```
+
+```{r}
+CELG_gmma <- GMMA(CELG[,4])
+plot(CELG_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+
+```{r}
+COST_gmma <- GMMA(COST[,4])
+plot(COST_gmma,col = brewer.pal(11,"Spectral"))
+```
+```{r}
+WEC_gmma <- GMMA(WEC[,4])
+plot(WEC_gmma,col = brewer.pal(11,"Spectral"))
+```
+```{r}
+NVDA_gmma <- GMMA(NVDA[,4])
+plot(NVDA_gmma,col = brewer.pal(11,"Spectral"))
+
+```
+
+
+```{r}
+
+DFS_gmma <- GMMA(DFS[,4])
+plot(DFS_gmma,col = brewer.pal(11,"Spectral"))
+```
+```{r}
+AAPL_gmma <- GMMA(AAPL[,4])
+plot(AAPL_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+AZN_gmma <- GMMA(AZN[,4])
+plot(AZN_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+DIS_gmma <- GMMA(DIS[,4])
+plot(DIS_gmma,col = brewer.pal(11,"Spectral"))
+```
+
+```{r}
+EFA_gmma <- GMMA(EFA[,4])
+plot(EFA_gmma,col = brewer.pal(11,"Spectral"))
+```
